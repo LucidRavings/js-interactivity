@@ -12,27 +12,41 @@ let addMovie = ((event) => {
     movieTitle.textContent = inputField.value
     movieTitle.addEventListener('click', crossOffMovie)
     movie.appendChild(movieTitle)
+
     let deleteBtn = document.createElement('button')
     deleteBtn.textContent = ('X')
     deleteBtn.addEventListener('click', deleteMovie)
+
     movie.appendChild(deleteBtn)
     movieList.appendChild(movie)
 
+    message.textContent = (`Movie added!`)
+    revealMessage()
 })
 
-let tempForm = document.querySelector('form')
-tempForm.addEventListener('submit', addMovie)
+
+document.querySelector('form').addEventListener('submit', addMovie)
+
 
 let deleteMovie = ((event) => {
     event.target.parentNode.remove()
-    message.textContent = ('Movie deleted!')
+    message.textContent = (`${event.target.parentNode.childNodes[0].textContent} deleted!`)
+    revealMessage()
 })
 
 let crossOffMovie = ((event) => {
     event.target.classList.toggle('checked')
     if(event.target.classList.contains('checked')){
-        message.textContent = ('Movie watched!')
+        message.textContent = (`${event.target.textContent} watched!`)
     } else {
-        message.textContent = ('Movie added back!')
+        message.textContent = (`${event.target.textContent} added back!`)
     }
+    revealMessage()
 })
+
+let revealMessage = () => {
+    message.classList.remove('hide')
+    let timeOut = setTimeout(() => {
+        message.classList.add('hide')
+    }, 2000)
+}
